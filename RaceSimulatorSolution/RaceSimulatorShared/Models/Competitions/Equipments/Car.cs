@@ -1,21 +1,50 @@
 ﻿namespace RaceSimulatorShared.Models.Competitions.Equipments
 {
-    internal class Car(int quality, int performance, int speed) : IEquipment
+    internal class Car : IEquipment
     {
-        public int Quality { get; set; } = quality;
-        public int Performance { get; set; } = performance;
-        public int Speed { get; set; } = speed;
+        private readonly int minProperty = 1;
+        private readonly int maxProperty = 100;
+        private readonly Random random = new();
+
+        public int Quality { get; set; }
+        public int Performance { get; set; }
+        public int Speed { get; set; }
         public bool IsBroken { get; set; } = false;
         public int Damage { get; set; } = 0;
 
-        private readonly Random random = new();
+        /// <summary>
+        /// Car properties are randomized between 1 and 100.
+        /// </summary>
+        public Car()
+        {
+            Random r = new();
+            Quality = r.Next(minProperty, maxProperty);
+            Performance = r.Next(minProperty, maxProperty);
+            Speed = r.Next(minProperty, maxProperty);
+        }
+
+        /// <summary>
+        /// Default property value of 0 will be randomized between 1 and 100.
+        /// </summary>
+        public Car(int quality, int performance, int speed)
+        {
+            Random r = new();
+
+            quality = quality > maxProperty ? maxProperty : quality;
+            performance = performance > maxProperty ? maxProperty : performance;
+            speed = speed > maxProperty ? maxProperty : speed;
+
+            Quality = quality == 0 ? r.Next(minProperty, maxProperty) : quality;
+            Performance = performance == 0 ? r.Next(minProperty, maxProperty) : performance;
+            Speed = speed == 0 ? r.Next(minProperty, maxProperty) : speed;
+        }
 
         public bool TryBreak()
         {
-            if (random.Next(0, 100) > Quality && !IsBroken)
+            if (random.Next(0, maxProperty) > Quality && !IsBroken)
             {
                 IsBroken = true;
-                Damage = random.Next(0, 100);
+                Damage = random.Next(1, maxProperty);
                 return true;
             }
             return false;
@@ -26,7 +55,7 @@
             if (IsBroken)
             {
                 Damage -= 10 + random.Next(0, Performance);
-                
+
                 if (Damage <= 0)
                 {
                     IsBroken = false;

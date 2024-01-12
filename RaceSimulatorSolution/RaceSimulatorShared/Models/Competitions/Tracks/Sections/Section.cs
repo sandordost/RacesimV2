@@ -4,14 +4,20 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks.Sections
 {
     internal class Section(SectionType sectionType, int maxSectionProgression)
     {
-        public SectionType SectionType { get; } = sectionType;
-        public Dictionary<IParticipant, int> ParticipantSectionProgressions { get; set; } = [];
-        public int MaxSectionProgression { get; } = maxSectionProgression;
+        internal SectionType SectionType { get; } = sectionType;
+        internal Dictionary<IParticipant, int> ParticipantSectionProgressions { get; set; } = [];
+        private int MaxSectionProgression { get; } = maxSectionProgression;
+
+        internal void PlaceParticipant(IParticipant participant)
+        {
+            if (!ParticipantSectionProgressions.TryAdd(participant, 0))
+                ParticipantSectionProgressions[participant] = 0;
+        }
 
         /// <summary>
         /// Returns the remaining distance the participant has to travel.
         /// </summary>
-        public int MoveParticipant(IParticipant participant, int movementAmount)
+        internal int MoveParticipant(IParticipant participant, int movementAmount)
         {
             if (!ParticipantSectionProgressions.TryAdd(participant, movementAmount))
                 ParticipantSectionProgressions[participant] += movementAmount;
@@ -22,6 +28,12 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks.Sections
                 ParticipantSectionProgressions.Remove(participant);
 
             return remainingMovementAmount;
+        }
+
+        internal void AdvanceParticipants()
+        {
+            foreach (IParticipant participant in ParticipantSectionProgressions.Keys)
+                MoveParticipant(participant, SectionType.GetMovementAmount(participant));
         }
     }
 }

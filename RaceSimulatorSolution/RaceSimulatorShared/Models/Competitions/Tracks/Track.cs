@@ -1,4 +1,5 @@
-﻿using RaceSimulatorShared.Models.Competitions.Tracks.Sections;
+﻿using RaceSimulatorShared.Models.Competitions.Participants;
+using RaceSimulatorShared.Models.Competitions.Tracks.Sections;
 
 namespace RaceSimulatorShared.Models.Competitions.Tracks
 {
@@ -20,6 +21,20 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks
                 var section = new Section(sectionType, maxSectionProgression);
                 Sections.AddLast(section);
             }
+        }
+
+        public void PlaceParticipants(List<IParticipant> participants)
+        {
+            var firstSection = Sections.First ?? throw new Exception("Track has no sections.");
+
+            foreach (IParticipant participant in participants)
+                firstSection.Value.PlaceParticipant(participant);
+        }
+
+        public void AdvanceParticipants()
+        {
+            foreach (Section section in Sections)
+                section.AdvanceParticipants();
         }
     }
 }

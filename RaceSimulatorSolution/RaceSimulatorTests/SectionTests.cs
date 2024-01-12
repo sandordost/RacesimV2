@@ -21,5 +21,16 @@ namespace RaceSimulatorTests
             Assert.True(section.MoveParticipant(participant, movementAmount) <= 0); // Participant exists and remaining movement amount is 0 or less.
             Assert.True(section.ParticipantSectionProgressions.Count == 0); // Participant should be removed from the section.
         }
+
+        [Fact]
+        public void PlaceParticpant_ShouldAddParticipantToSection()
+        {
+            Section section = new(SectionType.Straight, 132);
+            IParticipant participant = new Driver("testDriver", new Car(10,10,10), TeamColor.Green);
+
+            Assert.True(section.ParticipantSectionProgressions.Count == 0);
+            section.PlaceParticipant(participant);
+            Assert.True(section.ParticipantSectionProgressions.Count == 1);
+        }
     }
 }
