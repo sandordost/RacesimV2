@@ -1,9 +1,10 @@
 ﻿using RaceSimulatorShared.Models.Competitions.Participants;
+using RaceSimulatorShared.Models.Competitions.Tracks.Events;
 using RaceSimulatorShared.Models.Competitions.Tracks.Sections;
 
 namespace RaceSimulatorShared.Models.Competitions.Tracks
 {
-    internal class Track
+    public class Track
     {
         public string Name { get; }
         public LinkedList<Section> Sections { get; set; } = [];
@@ -16,14 +17,14 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks
 
         private void InitializeSections(SectionType[] sectionTypes, int maxSectionProgression)
         {
-            foreach(SectionType sectionType in sectionTypes)
+            foreach (SectionType sectionType in sectionTypes)
             {
                 var section = new Section(sectionType, maxSectionProgression);
                 Sections.AddLast(section);
             }
         }
 
-        public void PlaceParticipants(List<IParticipant> participants)
+        public void PlaceParticipantsOnStart(List<IParticipant> participants)
         {
             var firstSection = Sections.First ?? throw new Exception("Track has no sections.");
 
@@ -31,10 +32,38 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks
                 firstSection.Value.PlaceParticipant(participant);
         }
 
-        public void AdvanceParticipants()
+        public void AdvanceParticipantsInAllSections()
         {
-            foreach (Section section in Sections)
-                section.AdvanceParticipants();
+            LinkedListNode<Section>? currentSection = Sections.First ?? throw new Exception("Track has no sections.");
+            Dictionary<(IParticipant, int), Section> participantsToBeMoved = [];
+
+            while (currentSection != null)
+            {
+                AdvanceParticipantsInSection(currentSection, participantsToBeMoved);
+                currentSection = currentSection.Next;
+            }
+
+            foreach (var participantToBeMoved in participantsToBeMoved)
+            {
+                participantToBeMoved.Value.PlaceParticipant(participantToBeMoved.Key.Item1, Math.Abs(participantToBeMoved.Key.Item2));
+            }
+
+            TrackEvents.InvokeTrackAdvanced(this, new TrackAdvancedEventArgs(this));
+        }
+
+        private void AdvanceParticipantsInSection(LinkedListNode<Section> currentSectionNode, Dictionary<(IParticipant, int), Section> participantsToBeMovedFromSection)
+        {
+            if (currentSectionNode == null)
+                throw new Exception("Track has no sections.");
+
+            foreach ((IParticipant, int) participantRemainingDistance in currentSectionNode.Value.AdvanceParticipants())
+            {
+                if (participantRemainingDistance.Item2 < 0)
+                {
+                    var nextSection = currentSectionNode.Next ?? Sections.First ?? throw new Exception("Track has no next section.");
+                    participantsToBeMovedFromSection.Add(participantRemainingDistance, nextSection.Value);
+                }
+            }
         }
     }
 }

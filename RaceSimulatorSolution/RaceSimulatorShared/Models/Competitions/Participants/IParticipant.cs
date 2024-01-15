@@ -2,7 +2,7 @@
 
 namespace RaceSimulatorShared.Models.Competitions.Participants
 {
-    internal interface IParticipant
+    public interface IParticipant
     {
         public string Name { get; }
         public int Points { get; set; }

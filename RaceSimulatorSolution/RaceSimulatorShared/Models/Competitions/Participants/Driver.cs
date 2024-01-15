@@ -2,7 +2,7 @@
 
 namespace RaceSimulatorShared.Models.Competitions.Participants
 {
-    internal class Driver(string name, IEquipment equipment, TeamColor teamColor) : IParticipant
+    public class Driver(string name, IEquipment equipment, TeamColor teamColor) : IParticipant
     {
         public string Name { get; } = name;
         public int Points { get; set; } = 0;

@@ -1,6 +1,6 @@
 ﻿namespace RaceSimulatorShared.Models.Competitions.Equipments
 {
-    internal interface IEquipment
+    public interface IEquipment
     {
         public int Quality { get; set; }
         public int Performance { get; set; }

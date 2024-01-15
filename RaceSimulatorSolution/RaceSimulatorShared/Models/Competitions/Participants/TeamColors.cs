@@ -1,6 +1,6 @@
 ﻿namespace RaceSimulatorShared.Models.Competitions.Participants
 {
-    internal enum TeamColor
+    public enum TeamColor
     {
         Red,
         Green,

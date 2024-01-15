@@ -16,9 +16,12 @@ namespace RaceSimulatorTests
             IParticipant participant = new Driver("testDriver", new Car(10,10,10), TeamColor.Green);
 
             Assert.True(section.ParticipantSectionProgressions.Count == 0);
+            section.PlaceParticipant(participant);
+
             Assert.True(section.MoveParticipant(participant, movementAmount) == maxSectionProgression - movementAmount);
             Assert.True(section.ParticipantSectionProgressions.Count == 1);
-            Assert.True(section.MoveParticipant(participant, movementAmount) <= 0); // Participant exists and remaining movement amount is 0 or less.
+            var nextSectionProgression = section.MoveParticipant(participant, movementAmount);
+            Assert.True(nextSectionProgression < 0); // Participant exists and remaining movement amount is 0 or less.
             Assert.True(section.ParticipantSectionProgressions.Count == 0); // Participant should be removed from the section.
         }
 

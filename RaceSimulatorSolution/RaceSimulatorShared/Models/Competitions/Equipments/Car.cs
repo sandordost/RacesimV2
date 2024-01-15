@@ -1,6 +1,6 @@
 ﻿namespace RaceSimulatorShared.Models.Competitions.Equipments
 {
-    internal class Car : IEquipment
+    public class Car : IEquipment
     {
         private readonly int minProperty = 1;
         private readonly int maxProperty = 100;

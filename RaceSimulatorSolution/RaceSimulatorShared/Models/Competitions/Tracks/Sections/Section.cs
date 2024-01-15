@@ -2,38 +2,45 @@
 
 namespace RaceSimulatorShared.Models.Competitions.Tracks.Sections
 {
-    internal class Section(SectionType sectionType, int maxSectionProgression)
+    public class Section(SectionType sectionType, int maxSectionProgression)
     {
-        internal SectionType SectionType { get; } = sectionType;
+        public SectionType SectionType { get; } = sectionType;
         internal Dictionary<IParticipant, int> ParticipantSectionProgressions { get; set; } = [];
         private int MaxSectionProgression { get; } = maxSectionProgression;
 
-        internal void PlaceParticipant(IParticipant participant)
+        internal void PlaceParticipant(IParticipant participant, int sectionProgression = 0)
         {
-            if (!ParticipantSectionProgressions.TryAdd(participant, 0))
-                ParticipantSectionProgressions[participant] = 0;
+            if (!ParticipantSectionProgressions.TryAdd(participant, sectionProgression))
+                ParticipantSectionProgressions[participant] = sectionProgression;
         }
 
         /// <summary>
-        /// Returns the remaining distance the participant has to travel.
+        /// Returns the remaining distance the participant has to travel. 
+        /// Returns < 0 if the participant has reached further then the end of the section, then removes the participant from the section.
         /// </summary>
         internal int MoveParticipant(IParticipant participant, int movementAmount)
         {
-            if (!ParticipantSectionProgressions.TryAdd(participant, movementAmount))
-                ParticipantSectionProgressions[participant] += movementAmount;
+            if(!ParticipantSectionProgressions.TryGetValue(participant, out int sectionProgression))
+                throw new Exception("Participant is not on this section.");
 
-            var remainingMovementAmount = MaxSectionProgression - ParticipantSectionProgressions[participant];
+            var newSectionProgression = sectionProgression + movementAmount;
 
-            if (remainingMovementAmount <= 0) 
+            if (newSectionProgression > MaxSectionProgression)
+            {
                 ParticipantSectionProgressions.Remove(participant);
-
-            return remainingMovementAmount;
+                return MaxSectionProgression - newSectionProgression;
+            }
+            else
+            {
+                ParticipantSectionProgressions[participant] = newSectionProgression;
+                return MaxSectionProgression - newSectionProgression;
+            }
         }
 
-        internal void AdvanceParticipants()
+        internal IEnumerable<(IParticipant, int)> AdvanceParticipants()
         {
             foreach (IParticipant participant in ParticipantSectionProgressions.Keys)
-                MoveParticipant(participant, SectionType.GetMovementAmount(participant));
+                yield return (participant, MoveParticipant(participant, participant.Equipment.Speed));
         }
     }
 }
