@@ -12,8 +12,8 @@ namespace RaceSimulatorTests
             int maxSectionProgression = 132;
             int movementAmount = 79;
 
-            Section section = new(SectionType.Straight, maxSectionProgression);
-            IParticipant participant = new Driver("testDriver", new Car(10,10,10), TeamColor.Green);
+            Section section = new(SectionType.Straight, Direction.Right, maxSectionProgression);
+            IParticipant participant = new Driver("testDriver", new Car(100,100,10), TeamColor.Green);
 
             Assert.True(section.ParticipantSectionProgressions.Count == 0);
             section.PlaceParticipant(participant);
@@ -28,7 +28,7 @@ namespace RaceSimulatorTests
         [Fact]
         public void PlaceParticpant_ShouldAddParticipantToSection()
         {
-            Section section = new(SectionType.Straight, 132);
+            Section section = new(SectionType.Straight, Direction.Right, 132);
             IParticipant participant = new Driver("testDriver", new Car(10,10,10), TeamColor.Green);
 
             Assert.True(section.ParticipantSectionProgressions.Count == 0);

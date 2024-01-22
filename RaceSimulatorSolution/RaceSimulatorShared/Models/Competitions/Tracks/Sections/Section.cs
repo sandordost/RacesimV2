@@ -2,10 +2,11 @@
 
 namespace RaceSimulatorShared.Models.Competitions.Tracks.Sections
 {
-    public class Section(SectionType sectionType, int maxSectionProgression)
+    public class Section(SectionType sectionType, Direction direction, int maxSectionProgression)
     {
         public SectionType SectionType { get; } = sectionType;
-        internal Dictionary<IParticipant, int> ParticipantSectionProgressions { get; set; } = [];
+        public Direction Direction { get; set; } = direction;
+        public Dictionary<IParticipant, int> ParticipantSectionProgressions { get; set; } = [];
         private int MaxSectionProgression { get; } = maxSectionProgression;
 
         internal void PlaceParticipant(IParticipant participant, int sectionProgression = 0)
@@ -25,15 +26,25 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks.Sections
 
             var newSectionProgression = sectionProgression + movementAmount;
 
-            if (newSectionProgression > MaxSectionProgression)
+            participant.Equipment.TryBreak();
+
+            if (!participant.Equipment.IsBroken)
             {
-                ParticipantSectionProgressions.Remove(participant);
-                return MaxSectionProgression - newSectionProgression;
+                if (newSectionProgression > MaxSectionProgression)
+                {
+                    ParticipantSectionProgressions.Remove(participant);
+                    return MaxSectionProgression - newSectionProgression;
+                }
+                else
+                {
+                    ParticipantSectionProgressions[participant] = newSectionProgression;
+                    return MaxSectionProgression - newSectionProgression;
+                }
             }
             else
             {
-                ParticipantSectionProgressions[participant] = newSectionProgression;
-                return MaxSectionProgression - newSectionProgression;
+                participant.Equipment.TryRepair();
+                return MaxSectionProgression - sectionProgression;
             }
         }
 

@@ -17,11 +17,47 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks
 
         private void InitializeSections(SectionType[] sectionTypes, int maxSectionProgression)
         {
+            Direction currentDirection = Direction.Right;
             foreach (SectionType sectionType in sectionTypes)
             {
-                var section = new Section(sectionType, maxSectionProgression);
+                var section = new Section(sectionType, currentDirection, maxSectionProgression);
                 Sections.AddLast(section);
+                currentDirection = DetectDirectionChange(sectionType, currentDirection);
             }
+        }
+
+        private static Direction DetectDirectionChange(SectionType sectionType, Direction currentDirection)
+        {
+            if(sectionType == SectionType.LeftCorner)
+            {
+                switch (currentDirection)
+                {
+                    case Direction.Right:
+                        return Direction.Up;
+                    case Direction.Up:
+                        return Direction.Left;
+                    case Direction.Left:
+                        return Direction.Down;
+                    case Direction.Down:
+                        return Direction.Right;
+                }
+            }
+            else if(sectionType == SectionType.RightCorner)
+            {
+                switch (currentDirection)
+                {
+                    case Direction.Right:
+                        return Direction.Down;
+                    case Direction.Up:
+                        return Direction.Right;
+                    case Direction.Left:
+                        return Direction.Up;
+                    case Direction.Down:
+                        return Direction.Left;
+                }
+            }
+
+            return currentDirection;
         }
 
         public void PlaceParticipantsOnStart(List<IParticipant> participants)
@@ -47,8 +83,6 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks
             {
                 participantToBeMoved.Value.PlaceParticipant(participantToBeMoved.Key.Item1, Math.Abs(participantToBeMoved.Key.Item2));
             }
-
-            TrackEvents.InvokeTrackAdvanced(this, new TrackAdvancedEventArgs(this));
         }
 
         private void AdvanceParticipantsInSection(LinkedListNode<Section> currentSectionNode, Dictionary<(IParticipant, int), Section> participantsToBeMovedFromSection)
@@ -56,12 +90,12 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks
             if (currentSectionNode == null)
                 throw new Exception("Track has no sections.");
 
-            foreach ((IParticipant, int) participantRemainingDistance in currentSectionNode.Value.AdvanceParticipants())
+            foreach ((IParticipant participant, int remainingDistance) in currentSectionNode.Value.AdvanceParticipants())
             {
-                if (participantRemainingDistance.Item2 < 0)
+                if (remainingDistance < 0)
                 {
                     var nextSection = currentSectionNode.Next ?? Sections.First ?? throw new Exception("Track has no next section.");
-                    participantsToBeMovedFromSection.Add(participantRemainingDistance, nextSection.Value);
+                    participantsToBeMovedFromSection.Add((participant, remainingDistance), nextSection.Value);
                 }
             }
         }

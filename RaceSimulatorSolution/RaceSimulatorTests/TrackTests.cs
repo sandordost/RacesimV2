@@ -58,28 +58,6 @@ namespace RaceSimulatorTests
         }
 
         [Fact]
-        public void AdvanceParticipantsInAllSections_ShouldInvokeTrackAdvancedEvent()
-        {
-            var sections = new SectionType[] { SectionType.Start, SectionType.Finish };
-            Track track = new("testTrack", sections, 100);
-
-            var participants = new List<IParticipant>()
-            {
-                new Driver("testDriver1", new Car(100, 100, 51), TeamColor.Green),
-                new Driver("testDriver2", new Car(100, 100, 51), TeamColor.Grey),
-                new Driver("testDriver3", new Car(100, 100, 51), TeamColor.Red)
-            };
-
-            track.PlaceParticipantsOnStart(participants);
-
-            bool trackAdvancedEventInvoked = false;
-            TrackEvents.TrackAdvanced += (sender, args) => trackAdvancedEventInvoked = true;
-
-            track.AdvanceParticipantsInAllSections();
-            Assert.True(trackAdvancedEventInvoked);
-        }
-
-        [Fact]
         public void AdvanceParticipantsInAllSections_ShouldPlaceParticipantsOnStartAfterFinish()
         {
             var sections = new SectionType[] { SectionType.Start, SectionType.Finish };

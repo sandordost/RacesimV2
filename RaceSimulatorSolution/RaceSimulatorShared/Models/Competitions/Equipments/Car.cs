@@ -2,7 +2,7 @@
 {
     public class Car : IEquipment
     {
-        private readonly int minProperty = 1;
+        private readonly int minProperty = 30;
         private readonly int maxProperty = 100;
         private readonly Random random = new();
 
