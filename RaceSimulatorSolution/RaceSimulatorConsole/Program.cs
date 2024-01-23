@@ -15,9 +15,19 @@ void Data_RaceChanged(object? sender, RaceChangedEventArgs e)
 
 void TrackEventsManager_TrackAdvanced(object? sender, TrackAdvancedEventArgs e)
 {
-    int[] offset = [4, 11];
-    TrackVisualizer.ShowTrack(e.Track, offset);
-    TrackVisualizer.ShowScoreAndTrackInformation(currentRace.GetOrderedScores().ToDictionary(), e.Track, Data.FinishedRaces.LastOrDefault());
+    if(Console.WindowHeight <= 40 || Console.WindowWidth <= 50)
+    {
+        Console.Clear();
+        Console.SetCursorPosition(0, Console.WindowHeight / 2);
+        Console.Write("Please increase your window height and width ...");
+    }
+    else
+    {
+        int[] offset = [4, 11];
+        TrackVisualizer.ShowTrack(e.Track, offset);
+        TrackVisualizer.ShowScoreAndTrackInformation(currentRace.GetOrderedScores().ToDictionary(), e.Track, Data.FinishedRaces.LastOrDefault());
+    }
+
     Console.SetCursorPosition(0, Console.WindowHeight - 1);
     Console.Write("Press any key to close the simulation");
 }
