@@ -2,11 +2,12 @@
 The initial version of our project didn't fully align with clean-code and SOLID principles, prompting this comprehensive remake. This iteration is developed using C# .NET 8.0 and showcases significant improvements.
 
 <h2>Features</h2>
+
+
 <h3>Race Simulator Shared (Core) Project</h3>
 The <b>RaceSimulatorShared</b> project forms the backbone of the Race Simulator application, defining key models and components integral to the simulation. This core library is organized into various directories, each tailored to specific simulation aspects:
 
 <h4>Models</h4>
-<hr>
 <ul>
   <li><b>Competition.cs</b>: Structures and properties of a competition, including multiple races or tracks.</li>
   <li>
@@ -32,7 +33,6 @@ The <b>RaceSimulatorShared</b> project forms the backbone of the Race Simulator 
 </ul>
 
 <h4>Events</h4>
-<hr>
 <ul>
   <li><b>ParticipantChangedEventArgs.cs</b>: Events for participant status or position changes.</li>
   <li><b>ParticipantLappedEventArgs.cs</b>: Events marking a participant's lap completion.</li>
@@ -41,12 +41,13 @@ The <b>RaceSimulatorShared</b> project forms the backbone of the Race Simulator 
 </ul>
 
 <h4>Sections</h4>
-<hr>
 <ul>
   <li><b>Direction.cs</b>: Enumerates possible directions in a track section.</li>
   <li><b>Section.cs</b>: Represents a single section of the race track, detailing type and direction.</li>
   <li><b>SectionType.cs</b>: Defines different types of track sections, such as start, finish, and corner.</li>
 </ul>
+<hr>
+
 
 <h3>Controller Project</h3>
 The <b>RaceSimulatorController</b> project serves as the control center for managing the race logic and data flow. It consists of several key components:
@@ -69,6 +70,8 @@ The <b>RaceSimulatorController</b> project serves as the control center for mana
   <li><b>Race.cs</b>: Represents a single race, encompassing the logic for starting the race, handling participant laps, and determining the race's conclusion.</li>
   <li><b>Score.cs</b>: Defines the scoring system, keeping track of each participant's laps and time elapsed.</li>
 </ul>
+<hr>
+
 
 <h3>Console Project</h3>
 The <b>RaceSimulatorConsole</b> project provides a text-based interface for interacting with the Race Simulator. It includes:
@@ -82,6 +85,8 @@ The <b>RaceSimulatorConsole</b> project provides a text-based interface for inte
     </ul>
   </li>
 </ul>
+<hr>
+
 
 <h3>WPF Project (RaceSimulatorWPF.zip)</h3>
 The <b>RaceSimulatorWPF</b> project introduces a Graphical User Interface using Windows Presentation Foundation (WPF). It includes:
@@ -93,6 +98,8 @@ The <b>RaceSimulatorWPF</b> project introduces a Graphical User Interface using 
   <li><b>TeamColorToBrushConverter.cs</b>: A utility class for converting team colors to brush objects for UI rendering.</li>
 </ul>
 <p><i>Image Suggestion: Insert a screenshot of the main window from the WPF application here to showcase the GUI.</i></p>
+<hr>
+
 
 <h3>Test Project (RaceSimulatorTests.zip)</h3>
 The <b>Test Project</b> contains unit tests for various components of the Race Simulator, ensuring robustness and reliability:
@@ -114,3 +121,4 @@ The <b>Test Project</b> contains unit tests for various components of the Race S
     </ul>
   </li>
 </ul>
+<hr>
