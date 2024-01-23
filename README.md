@@ -48,13 +48,13 @@ The **RaceSimulatorController** project serves as the control center for managin
   - **Score.cs**: Defines the scoring system, keeping track of each participant's laps and time elapsed.
 
 ### Console Project (RaceSimulatorConsole)
-![Console Application](./Images/Console_Picture.png)
-
 The following images displays the console application in action:
   - The top of the console is a **scoreboard**. You can see the placement, name, laps and time of each participant (in that order).
   - The middle of the console is the track. The track is divided into sections. You can always recognize the start and finish by the lines on the road, **"#"** is the **finishline** and **"|"** is the **startline**.
   - You can recognize the **participants** by the first letter of their name.
   - The **start** of the track is always facing right.
+
+![Console Application](./Images/Console_Picture.png)
 
 The **RaceSimulatorConsole** project provides a text-based interface for interacting with the Race Simulator. It includes:
   - **Program.cs**: The main entry point for the console application, orchestrating user interaction, race initialization, and progression.
