@@ -1,33 +1,32 @@
 ﻿using RaceSimulatorConsole.Tools;
 using RaceSimulatorController;
-using RaceSimulatorShared.Models.Competitions.Participants;
-using RaceSimulatorShared.Models.Competitions.Tracks;
+using RaceSimulatorShared.Models.Participants;
+using RaceSimulatorShared.Models.Tracks;
 
-namespace RaceSimulatorConsole
+namespace RaceSimulatorConsole;
+
+internal class TrackVisualizer
 {
-    internal class TrackVisualizer
+    public static void ShowTrack(Track track, int[] offset)
     {
-        public static void ShowTrack(Track track, int[] offset)
+        TrackPrinter.PrintTrack(track, offset);
+    }
+
+    public static void ShowScoreAndTrackInformation(Dictionary<IParticipant, Score> scores, Track track, Race? previousRace)
+    {
+        if (previousRace != null)
         {
-            TrackPrinter.PrintTrack(track, offset);
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine($"----------- Previous Winner: {previousRace.WinningParticipant?.Name} -----------");
         }
 
-        public static void ShowScoreAndTrackInformation(Dictionary<IParticipant, Score> scores, Track track, Race? previousRace)
+        for (int i = 0; i < scores.Count; i++)
         {
-            if (previousRace != null)
-            {
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine($"----------- Previous Winner: {previousRace.WinningParticipant?.Name} -----------");
-            }
-
-            for (int i = 0; i < scores.Count; i++)
-            {
-                Console.SetCursorPosition(0, i + 1);
-                Console.Write($"{i+1}. {scores.Keys.ElementAt(i).Name}: {scores.Values.ElementAt(i).Laps} ({scores.Values.ElementAt(i).TimeElapsed}s)");
-            }
-
-            Console.SetCursorPosition(0, scores.Count + 2);
-            Console.Write($"Track: {track.Name} ({track.CalculateTrackLength()}m)");
+            Console.SetCursorPosition(0, i + 1);
+            Console.Write($"{i+1}. {scores.Keys.ElementAt(i).Name}: {scores.Values.ElementAt(i).Laps} ({scores.Values.ElementAt(i).TimeElapsed}s)");
         }
+
+        Console.SetCursorPosition(0, scores.Count + 2);
+        Console.Write($"Track: {track.Name} ({track.CalculateTrackLength()}m)");
     }
 }

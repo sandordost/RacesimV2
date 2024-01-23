@@ -1,7 +1,7 @@
-﻿using RaceSimulatorShared.Models.Competitions.Equipments;
-using RaceSimulatorShared.Models.Competitions.Participants;
-using RaceSimulatorShared.Models.Competitions.Tracks;
-using RaceSimulatorShared.Models.Competitions.Tracks.Sections;
+﻿using RaceSimulatorShared.Models.Equipments;
+using RaceSimulatorShared.Models.Participants;
+using RaceSimulatorShared.Models.Tracks;
+using RaceSimulatorShared.Models.Tracks.Sections;
 
 namespace RaceSimulatorTests.RaceSimulatorSharedTests;
 

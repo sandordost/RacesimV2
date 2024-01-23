@@ -1,7 +1,7 @@
 ﻿using RaceSimulatorController.Events;
-using RaceSimulatorShared.Models.Competitions.Participants;
-using RaceSimulatorShared.Models.Competitions.Tracks;
-using RaceSimulatorShared.Models.Competitions.Tracks.Events;
+using RaceSimulatorShared.Models.Participants;
+using RaceSimulatorShared.Models.Tracks;
+using RaceSimulatorShared.Models.Tracks.Events;
 using System.Diagnostics;
 
 namespace RaceSimulatorController

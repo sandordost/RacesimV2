@@ -1,4 +1,4 @@
-﻿using RaceSimulatorShared.Models.Competitions.Equipments;
+﻿using RaceSimulatorShared.Models.Equipments;
 
 namespace RaceSimulatorTests.RaceSimulatorSharedTests;
 
