@@ -55,6 +55,7 @@ The following images displays the console application in action:
   - The **start** of the track is always facing right.
 
 ![Console Application](./Images/Console_Picture.png)
+
 The **RaceSimulatorConsole** project provides a text-based interface for interacting with the Race Simulator. It includes:
   - **Program.cs**: The main entry point for the console application, orchestrating user interaction, race initialization, and progression.
   - **Tools/**:
