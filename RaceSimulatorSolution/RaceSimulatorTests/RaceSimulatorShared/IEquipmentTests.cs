@@ -1,6 +1,6 @@
 ﻿using RaceSimulatorShared.Models.Competitions.Equipments;
 
-namespace RaceSimulatorTests
+namespace RaceSimulatorTests.RaceSimulatorShared
 {
     public class IEquipmentTests
     {
@@ -10,7 +10,7 @@ namespace RaceSimulatorTests
             var car = new Car(5, 1, 1);
             int breakAttepts = 100;
 
-            for(int i = 0; i < breakAttepts; i++)
+            for (int i = 0; i < breakAttepts; i++)
             {
                 if (car.TryBreak())
                 {
@@ -25,10 +25,15 @@ namespace RaceSimulatorTests
         {
             var car = new Car(1, 5, 1);
 
-            car.TryBreak();
+            int breakAttepts = 200;
+            for (int i = 0; i < breakAttepts; i++)
+            {
+                car.TryBreak();
+            }
+
             Assert.True(car.IsBroken);
 
-            int repairAttempts = 100;
+            int repairAttempts = 200;
 
             for (int i = 0; i < repairAttempts; i++)
             {
@@ -51,7 +56,11 @@ namespace RaceSimulatorTests
                 car.TryBreak();
             }
 
-            car.TryRepair();
+            var repairAttempts = 100;
+            for (int i = 0; i < repairAttempts; i++)
+            {
+                car.TryRepair();
+            }
 
             Assert.True(car.Damage == 0);
         }

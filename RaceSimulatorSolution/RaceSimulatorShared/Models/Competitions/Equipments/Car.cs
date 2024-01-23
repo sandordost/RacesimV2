@@ -41,10 +41,11 @@
 
         public bool TryBreak()
         {
-            if (random.Next(0, maxProperty) > Quality && !IsBroken)
+            // Random chance to break the car. (Refined by fiddeling with the numbers)
+            if (random.Next(-maxProperty * 10, maxProperty) > Quality && !IsBroken)
             {
                 IsBroken = true;
-                Damage = random.Next(1, maxProperty);
+                Damage = random.Next(1, maxProperty * 10);
                 return true;
             }
             return false;
@@ -54,7 +55,7 @@
         {
             if (IsBroken)
             {
-                Damage -= 10 + random.Next(0, Performance);
+                Damage -= 10 + random.Next(0, Math.Clamp(Performance - 10, 0, maxProperty));
 
                 if (Damage <= 0)
                 {

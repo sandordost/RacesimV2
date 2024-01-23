@@ -1,0 +1,120 @@
+﻿<Window x:Class="RaceSimulatorWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:RaceSimulatorWPF"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:racesimulatorwpf="clr-namespace:RaceSimulatorWPF" d:DataContext="{d:DesignInstance Type=racesimulatorwpf:RaceDataContext}"
+		mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1400"
+		Visibility="Visible">
+	<Window.Resources>
+		<local:TeamColorToBrushConverter x:Key="TeamColorToBrushConverter"/>
+	</Window.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*" />
+			<ColumnDefinition Width="3*" />
+		</Grid.ColumnDefinitions>
+
+		<!-- Scoreboard Section -->
+		<Border Grid.Column="0" Background="DarkSlateGray" Margin="5">
+			<StackPanel>
+				<TextBlock FontWeight="Bold" Padding="5" Foreground="Gold">
+					<TextBlock.Style>
+						<Style TargetType="TextBlock">
+							<Setter Property="Visibility" Value="Visible"/>
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding PreviousRace.WinningParticipant, Mode=OneWay}" Value="{x:Null}">
+									<Setter Property="Visibility" Value="Collapsed"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+					<Run Text="Previous Winner: "/>
+					<Run Text="{Binding PreviousRace.WinningParticipant.Name, Mode=OneWay}"/>
+				</TextBlock>
+				<TextBlock Text="Scoreboard" FontWeight="Bold" Padding="5" Foreground="White" />
+				<ListBox ItemsSource="{Binding Scores, Mode=OneWay}" Background="Transparent">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Margin="5, 2, 5 , 2" Background="White">
+                            <Run Text="{Binding Key.Name, Mode=OneWay}" />
+                            <Run Text=" (lap " />
+                            <Run Text="{Binding Value.Laps, Mode=OneWay}" />
+                            <Run Text=", " />
+                            <Run Text="{Binding Value.TimeElapsed, Mode=OneWay}" />
+                            <Run Text="s)" />
+							</TextBlock>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
+		</Border>
+
+		<!-- Track Information and Driver Progression -->
+		<Border Grid.Column="1" Background="DarkSlateBlue" Margin="5" VerticalAlignment="Stretch">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<!-- Track Information -->
+				<StackPanel Grid.Row="0" Background="DarkSlateGray">
+					<TextBlock FontWeight="Bold" Padding="5" Foreground="White">
+						<Run Text="Track: "/>
+						<Run Text="{Binding CurrentRace.Track.Name, Mode=OneWay}"/>
+					</TextBlock>
+					<TextBlock Padding="5" Foreground="White">
+						<Bold><Run Text="Length: "/></Bold>
+						<Run Text="{Binding TrackLength, Mode=OneWay}"/>
+					</TextBlock>
+					<ScrollViewer VerticalScrollBarVisibility="Auto" Height="90" Background="Salmon">
+						<ItemsControl ItemsSource="{Binding CurrentRace.Track.Sections}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Padding="5" Margin="3,1,3,1" Background="LightSalmon" Text="{Binding SectionType}"/>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</ScrollViewer>
+					<TextBlock Padding="5" FontWeight="Bold" Foreground="White">
+						<Run Text="Next Up: " />
+						<Run Text="{Binding NextTrack.Name, Mode=OneWay}"/>
+					</TextBlock>
+				</StackPanel>
+
+				<!-- Drivers & Their progression -->
+				<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+					<ItemsControl ItemsSource="{Binding Distances, Mode=OneWay}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<StackPanel Margin="5" Background="{Binding Key.TeamColor, Converter={StaticResource TeamColorToBrushConverter}}">
+									<TextBlock Padding="5" Foreground="White">
+										<Bold><Run Text="{Binding Key.Name, Mode=OneWay}"/></Bold>
+										<Run Text="  |  Car Damage: "/>
+										<Run Text="{Binding Key.Equipment.Damage, Mode=OneWay}"/>
+										<Run Text="  |  Distance: "/>
+										<Run Text="{Binding Value, Mode=OneWay}"/>
+									</TextBlock>
+									<Border Padding="5">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="Auto"/>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="Auto"/>
+											</Grid.ColumnDefinitions>
+											<Rectangle Fill="LightBlue" Width="50" Height="20" Grid.Column="0" Margin="5" />
+											<ProgressBar Height="20" Maximum="{Binding Path=DataContext.TrackLength, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Value="{Binding Value, Mode=OneWay}" Grid.Column="1" Margin="5,0"/>
+											<Rectangle Fill="DarkRed" Width="50" Height="20" Grid.Column="2" Margin="5" />
+										</Grid>
+									</Border>
+								</StackPanel>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+			</Grid>
+		</Border>
+	</Grid>
+</Window>

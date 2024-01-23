@@ -2,12 +2,12 @@ using RaceSimulatorShared.Models.Competitions;
 using RaceSimulatorShared.Models.Competitions.Tracks;
 using RaceSimulatorShared.Models.Competitions.Tracks.Sections;
 
-namespace RaceSimulatorTests
+namespace RaceSimulatorTests.RaceSimulatorShared
 {
     public class CompetitionTests
     {
         [Fact]
-        public void TakeNextTrack_ShouldReturnNextTrack() 
+        public void TakeNextTrack_ShouldReturnNextTrack()
         {
             Competition competition = new();
             var sections = new SectionType[] { SectionType.Start, SectionType.Finish };

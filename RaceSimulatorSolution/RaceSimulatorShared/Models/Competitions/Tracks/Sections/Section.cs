@@ -7,7 +7,7 @@ namespace RaceSimulatorShared.Models.Competitions.Tracks.Sections
         public SectionType SectionType { get; } = sectionType;
         public Direction Direction { get; set; } = direction;
         public Dictionary<IParticipant, int> ParticipantSectionProgressions { get; set; } = [];
-        private int MaxSectionProgression { get; } = maxSectionProgression;
+        public int MaxSectionProgression { get; } = maxSectionProgression;
 
         internal void PlaceParticipant(IParticipant participant, int sectionProgression = 0)
         {

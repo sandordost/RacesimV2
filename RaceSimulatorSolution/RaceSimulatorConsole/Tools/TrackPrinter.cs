@@ -229,7 +229,7 @@ namespace RaceSimulatorConsole.Tools
         }
 
 
-        public static void PrintTrack(Track track)
+        public static void PrintTrack(Track track, int[] offset)
         {
             Console.Clear();
             int currentX = 0;
@@ -237,8 +237,8 @@ namespace RaceSimulatorConsole.Tools
 
             (int startX, int startY) = GetTrackStartPosition(track);
 
-            int adjustedStartX = startX < 0 ? Math.Abs(startX) : 0;
-            int adjustedStartY = startY < 0 ? Math.Abs(startY) : 0;
+            int adjustedStartX = startX < 0 ? Math.Abs(startX) + offset[0] : 0;
+            int adjustedStartY = startY < 0 ? Math.Abs(startY) + offset[1] : 0;
 
             foreach (Section section in track.Sections)
             {

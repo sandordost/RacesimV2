@@ -2,7 +2,7 @@
 using RaceSimulatorShared.Models.Competitions.Participants;
 using RaceSimulatorShared.Models.Competitions.Tracks.Sections;
 
-namespace RaceSimulatorTests
+namespace RaceSimulatorTests.RaceSimulatorShared
 {
     public class SectionTests
     {
@@ -13,7 +13,7 @@ namespace RaceSimulatorTests
             int movementAmount = 79;
 
             Section section = new(SectionType.Straight, Direction.Right, maxSectionProgression);
-            IParticipant participant = new Driver("testDriver", new Car(100,100,10), TeamColor.Green);
+            IParticipant participant = new Driver("testDriver", new Car(100, 100, 10), TeamColor.Green);
 
             Assert.True(section.ParticipantSectionProgressions.Count == 0);
             section.PlaceParticipant(participant);
@@ -29,7 +29,7 @@ namespace RaceSimulatorTests
         public void PlaceParticpant_ShouldAddParticipantToSection()
         {
             Section section = new(SectionType.Straight, Direction.Right, 132);
-            IParticipant participant = new Driver("testDriver", new Car(10,10,10), TeamColor.Green);
+            IParticipant participant = new Driver("testDriver", new Car(10, 10, 10), TeamColor.Green);
 
             Assert.True(section.ParticipantSectionProgressions.Count == 0);
             section.PlaceParticipant(participant);

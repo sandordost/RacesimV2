@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RaceSimulatorController\RaceSimulatorController.csproj" />
     <ProjectReference Include="..\RaceSimulatorShared\RaceSimulatorShared.csproj" />
   </ItemGroup>
 

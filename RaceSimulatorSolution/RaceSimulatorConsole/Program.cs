@@ -1,36 +1,25 @@
 ﻿using RaceSimulatorConsole;
-using RaceSimulatorConsole.Tools;
-using RaceSimulatorShared.Models.Competitions;
-using RaceSimulatorShared.Models.Competitions.Equipments;
-using RaceSimulatorShared.Models.Competitions.Participants;
-using RaceSimulatorShared.Models.Competitions.Tracks;
-using RaceSimulatorShared.Models.Competitions.Tracks.Sections;
+using RaceSimulatorController;
+using RaceSimulatorController.Events;
+using RaceSimulatorShared.Models.Competitions.Tracks.Events;
 
-Competition competition = new();
+Race currentRace;
+Data.RaceChanged += Data_RaceChanged;
+Data.Initialize();
 
-var driver1 = new Driver("Sandor", new Car(), TeamColor.Green);
-var driver2 = new Driver("Klaas", new Car(), TeamColor.Red);
-var driver3 = new Driver("Johan", new Car(), TeamColor.Blue);
-
-competition.Participants = [driver1, driver2, driver3];
-
-var track1 = new Track("Track1", [SectionType.Start, SectionType.Straight, SectionType.LeftCorner, SectionType.LeftCorner, SectionType.Straight, SectionType.Straight, SectionType.Straight, SectionType.LeftCorner, SectionType.LeftCorner, SectionType.Finish], 200);
-var track2 = new Track("Track2", [SectionType.Start, SectionType.Straight, SectionType.RightCorner, SectionType.Straight, SectionType.Finish], 200);
-
-competition.Tracks.Enqueue(track1);
-competition.Tracks.Enqueue(track2);
-
-Track? track = competition.TakeNextTrack() ?? throw new Exception("No tracks available.");
-competition.PlaceParticipantsOnTrack(track);
-
-Race race = new(track);
-race.trackEventsManager.TrackAdvanced += TrackEventsManager_TrackAdvanced;
-
-void TrackEventsManager_TrackAdvanced(object? sender, RaceSimulatorShared.Models.Competitions.Tracks.Events.TrackAdvancedEventArgs e)
+void Data_RaceChanged(object? sender, RaceChangedEventArgs e)
 {
-    TrackVisualizer.ShowTrack(e.Track);
+    currentRace = e.Race;
+    e.Race.Track.TrackEventsManager.TrackAdvanced += TrackEventsManager_TrackAdvanced;
 }
 
-race.Start();
+void TrackEventsManager_TrackAdvanced(object? sender, TrackAdvancedEventArgs e)
+{
+    int[] offset = [4, 11];
+    TrackVisualizer.ShowTrack(e.Track, offset);
+    TrackVisualizer.ShowScoreAndTrackInformation(currentRace.GetOrderedScores().ToDictionary(), e.Track, Data.FinishedRaces.LastOrDefault());
+    Console.SetCursorPosition(0, Console.WindowHeight - 1);
+    Console.Write("Press any key to close the simulation");
+}
 
-Console.ReadLine();
+Console.ReadKey();
