@@ -22,8 +22,8 @@ public class DataTests
         Data.Initialize();
         var initialRace = Data.CurrentRace;
 
-        for (int i = 0; i < 200; i++)
-        {
+        while(Data.CurrentRace == initialRace) 
+        { 
             Data.CurrentRace?.Track.AdvanceParticipantsInAllSections();
         }
 
