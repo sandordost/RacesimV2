@@ -18,7 +18,7 @@ namespace RaceSimulatorController
 
         public void Start()
         {
-            timer = new(50);
+            timer = new(500);
             timer.Elapsed += Timer_Elapsed;
             stopwatch.Start();
             timer.Start();

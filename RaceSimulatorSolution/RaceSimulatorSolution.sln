@@ -9,9 +9,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceSimulatorTests", "RaceS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceSimulatorShared", "RaceSimulatorShared\RaceSimulatorShared.csproj", "{A6558C58-783B-4311-B280-9D5A2EB5E101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceSimulatorController", "RaceSimulatorController\RaceSimulatorController.csproj", "{B17653F8-B967-4C1E-B70E-8CFAAF20EAF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceSimulatorController", "RaceSimulatorController\RaceSimulatorController.csproj", "{B17653F8-B967-4C1E-B70E-8CFAAF20EAF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceSimulatorWPF", "RaceSimulatorWPF\RaceSimulatorWPF.csproj", "{6BD2BE71-B65B-41CA-8C95-A413D94C67AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceSimulatorWPF", "RaceSimulatorWPF\RaceSimulatorWPF.csproj", "{6BD2BE71-B65B-41CA-8C95-A413D94C67AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3AE38339-DD3A-455E-912F-D31ECE2B9C68}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+		..\README_converted.md = ..\README_converted.md
+		..\Images\WPF_Picture.png = ..\Images\WPF_Picture.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

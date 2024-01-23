@@ -1,7 +1,7 @@
 ﻿using RaceSimulatorConsole;
 using RaceSimulatorController;
 using RaceSimulatorController.Events;
-using RaceSimulatorShared.Models.Competitions.Tracks.Events;
+using RaceSimulatorShared.Models.Tracks.Events;
 
 Race currentRace;
 Data.RaceChanged += Data_RaceChanged;

@@ -1,4 +1,4 @@
-﻿using RaceSimulatorShared.Models.Competitions;
+﻿using RaceSimulatorShared.Models;
 
 namespace RaceSimulatorController.Exceptions
 {

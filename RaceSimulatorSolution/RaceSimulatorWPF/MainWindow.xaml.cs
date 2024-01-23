@@ -1,6 +1,6 @@
 ﻿using RaceSimulatorController;
 using RaceSimulatorController.Events;
-using RaceSimulatorShared.Models.Competitions.Tracks.Events;
+using RaceSimulatorShared.Models.Tracks.Events;
 using System.Windows;
 
 namespace RaceSimulatorWPF
